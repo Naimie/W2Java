@@ -1,9 +1,6 @@
 //Kristina Elmgren
 
 import java.util.*;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 
 class Bank {
 	// Instance variables.
@@ -11,7 +8,6 @@ class Bank {
 	private Map<Integer, Account> accounts = new HashMap<Integer, Account>();
 	
 	// Instance methods.
-
 	int newAccount(int balance) {
 		int accountId = accountCounter++;
 		Account account = new Account(accountId, balance);
@@ -30,12 +26,10 @@ class Bank {
 			account.setBalance(account.getBalance() + operation.getAmount());
 		}
 	}
-		
 
 	void runTransaction(Transaction transaction) {
 		List<Integer> accountIds = transaction.getAccountIds();
 		List<Operation> operations = transaction.getOperations();
-
 
 		//if the operations handle two accounts both accounts need to be locked before the transaction can run
 		//to order our locking we will lock the account with the lowest Id first.
@@ -55,8 +49,8 @@ class Bank {
 					}
 				}
 			}
-		//if the second account id >= than the first we lock second account first and then the first, yielding if the second lock is unavailable
-		} else{
+		//if the second account id >= than the first we lock second account first and then the first account, yielding if the second lock is unavailable
+		}else{
 
 			synchronized (accounts.get(operations.get(1).getAccountId())) {
 				Thread.yield();
@@ -69,9 +63,6 @@ class Bank {
 				}
 			}
 		}
-
-
-
 	}
 }
 
