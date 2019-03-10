@@ -74,6 +74,7 @@ public class Program {
 			transactions[i] = new Transaction(bank);
 			transactions[i].add(withdrawals[i % NUM_ACCOUNTS]);
 			transactions[i].add(deposits[(i + 1) % NUM_ACCOUNTS]);
+
 		}
 
 		try {
