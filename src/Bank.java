@@ -26,7 +26,12 @@ class Bank {
 	
 	void runOperation(Operation operation) {
 		Account account = accounts.get(operation.getAccountId());
-		account.setBalance(account.getBalance() + operation.getAmount());
+		synchronized (account) {
+			account.setBalance(account.getBalance() + operation.getAmount());
+			//System.out.println("Account id: " +account.getId() + " Balance after change: "
+			//		+ account.getBalance() + " Change: " + operation.getAmount());
+
+		}
 	}
 		
 	// TODO: If you are not solving the advanced task you should remove this method runTransaction.
